@@ -1,0 +1,30 @@
+# docker-compose.yml
+services:
+  joplin:
+    image: joplin/server:latest
+    container_name: joplin
+    restart: unless-stopped
+    ports:
+      - 22300:22300
+    environment:
+      - APP_PORT=22300
+      - APP_BASE_URL=http://${TAILSCALE_IP}:22300
+      - DB_CLIENT=pg
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DATABASE=joplin
+      - POSTGRES_USER=joplin
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=db
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: joplin-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DATABASE=joplin
+      - POSTGRES_USER=joplin
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data

@@ -1,0 +1,15 @@
+services:
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    restart: always
+    ports:
+      - "8081:80"
+    volumes:
+      - /data/nextcloud/data:/var/www/html/data
+      - /data/nextcloud/config:/var/www/html/config
+      - /data/nextcloud/apps:/var/www/html/custom_apps
+    environment:
+      - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
+      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
+      - NEXTCLOUD_TRUSTED_DOMAINS=${LAN_IP} ${TAILSCALE_IP}

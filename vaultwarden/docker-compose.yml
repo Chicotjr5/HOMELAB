@@ -1,0 +1,15 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: always
+    environment:
+      # Dominio HTTPS de Tailscale del equipo (ver README para generarlo)
+      - DOMAIN=https://<EQUIPO>.<TAILNET>.ts.net:8443/
+      - ROCKET_TLS={certs="/ssl/cert.pem",key="/ssl/key.pem"}
+      - ROCKET_PORT=8443
+    volumes:
+      - /data/vaultwarden:/data
+      - /data/vaultwarden/tls:/ssl:ro
+    ports:
+      - "8443:8443"

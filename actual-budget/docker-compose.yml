@@ -1,0 +1,9 @@
+services:
+  actual-server:
+    image: actualbudget/actual-server:nightly
+    container_name: actual-server
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5006:5006"
+    volumes:
+      - ./data:/data

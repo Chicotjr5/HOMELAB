@@ -1,0 +1,13 @@
+{
+  "name": "sync-script",
+  "version": "1.0.0",
+  "description": "Sincronizacion bancaria automatica para Actual Budget",
+  "main": "sync.js",
+  "scripts": {
+    "sync": "node sync.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@actual-app/api": "^26.8.1"
+  }
+}

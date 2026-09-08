@@ -1,0 +1,11 @@
+# Reconstruido a partir del contenedor en ejecución (se arrancó con `docker run`)
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /data/portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock

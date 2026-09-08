@@ -1,0 +1,26 @@
+# Secretos y configuración local
+.env
+.env.*
+!.env.example
+
+# Datos de los servicios
+data/
+postgres/
+conf/
+work/
+etc-pihole/
+etc-dnsmasq.d/
+config/
+cache/
+
+# Certificados y claves TLS
+*.pem
+*.key
+*.crt
+
+# Node (sync-script de Actual)
+node_modules/
+
+# Miscelánea
+*.log
+dist/

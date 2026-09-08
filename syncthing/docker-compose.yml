@@ -1,0 +1,18 @@
+# (Opcional) equivalente en Docker al servicio systemd del host
+services:
+  syncthing:
+    image: syncthing/syncthing:latest
+    container_name: syncthing
+    hostname: syncthing-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - "8384:8384"   # UI web
+      - "22000:22000/tcp"
+      - "22000:22000/udp"
+      - "21027:21027/udp"   # descubrimiento local
+    volumes:
+      - /home/<USUARIO>/.config/syncthing:/var/syncthing/config
+      - /data/sincronizar:/var/syncthing/real
+    restart: unless-stopped

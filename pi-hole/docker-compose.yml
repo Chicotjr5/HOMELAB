@@ -1,0 +1,18 @@
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8080:80/tcp"     # puerto 80 del host ocupado por un socket huérfano
+      - "9443:443/tcp"    # 443 tampoco disponible -> exponemos en 9443
+    environment:
+      TZ: 'Europe/Madrid'
+      FTLCONF_webserver_api_password: '${PIHOLE_WEBPASSWORD}'
+    volumes:
+      - './etc-pihole:/etc/pihole'
+      - './etc-dnsmasq.d:/etc/dnsmasq.d'
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped

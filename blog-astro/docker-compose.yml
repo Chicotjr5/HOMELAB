@@ -1,0 +1,10 @@
+# Servidor del blog estático generado con Astro (carpeta dist/)
+services:
+  blog:
+    image: nginx:alpine
+    container_name: astro-blog
+    restart: unless-stopped
+    ports:
+      - "4321:80"
+    volumes:
+      - ./dist:/usr/share/nginx/html:ro
