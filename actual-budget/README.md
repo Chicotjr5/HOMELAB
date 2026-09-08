@@ -13,7 +13,7 @@ Actual Budget es el sucesor comunitario de Actual. Se gestiona desde el navegado
 
 ## Para qué lo uso
 
-Llevo las finanzas personales de casa: presupuestos mensuales, cuentas corrientes conectadas a mi banco y categorización automática de movimientos.
+Llevo las finanzas personales de casa: cuentas corrientes conectadas a mi banco y categorización automática de movimientos.
 
 El servidor corre **escuchando solo en localhost** (`127.0.0.1:5006`) porque la sincronización bancaria debe lanzarla yo desde un script externo (ver abajo) y el acceso remoto lo hago con `tailscale serve`, que publica localhost:5006 en HTTPS dentro de la tailnet.
 
