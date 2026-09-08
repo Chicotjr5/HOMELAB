@@ -1,6 +1,6 @@
 # Homelab
 
-Repositorio con la documentación y configuración de mi homelab: un servidor casero basado en un portátil reciclado que ejecuta servicios autoalojados, mayoritariamente de código abierto, para sustituir a servicios de pago o en la nube de terceros.
+Repositorio con la documentación y configuración de mi homelab: un servidor que ejecuta servicios autoalojados, mayoritariamente de código abierto, para sustituir a servicios de pago o en la nube de terceros.
 
 Cada servicio tiene su propia carpeta con un `README.md` (qué es, para qué lo uso y cómo instalarlo) y su `docker-compose.yml` con los datos sensibles ofuscados.
 
