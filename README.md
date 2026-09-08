@@ -11,24 +11,24 @@ Cada servicio tiene su propia carpeta con un `README.md` (qué es, para qué lo 
 | Componente | Detalle |
 |---|---|
 | Equipo | Portátil HP 15ns-eq1071 reutilizado como servidor |
-| CPU | AMD Ryzen 7 4700U (8 núcleos / 8 hilos) con gráfica Radeon integrada |
-| RAM | 32 GB |
+| CPU | AMD Ryzen 7 4700U (8 núcleos / 8 hilos) |
+| RAM | 32 GB DDR4 |
 | Almacenamiento | SSD NVMe 512 GB (74 GB para el sistema + 567 GB montados en `/data` para datos y medios) |
 | Sistema operativo | Ubuntu 26.04 LTS |
 | Motor de contenedores | Docker + Docker Compose |
 | Red | Wi-Fi/Ethernet en LAN (`<LAN_IP>`) + malla privada Tailscale (`<TAILSCALE_IP>`) |
 
-El portátil está encendido 24/7 en casa. El arranque de los contenedores es automático gracias a las políticas `restart: always / unless-stopped`.
+El portátil está encendido 24/7. El arranque de los contenedores es automático gracias a las políticas `restart: always / unless-stopped`.
 
 ## Software
 
-| Servicio | Función | Sustituye a (de pago / cerrado) | Puerto |
+| Servicio | Función | Sustituye a | Puerto |
 |---|---|---|---|
-| [Immich](immich/) | Foto y vídeo personal con IA (búsqueda, caras, lugares) | Google Photos, iCloud Fotos | 2283 |
+| [Immich](immich/) | Foto y vídeo personal con  (búsqueda, caras, lugares) | Google Photos, iCloud Fotos | 2283 |
 | [Jellyfin](jellyfin/) | Streaming de películas, series y música | Netflix, Plex Pass, Spotify | 8096 |
 | [Nextcloud](nextcloud/) | Nube de archivos, calendario y sincronización | Google Drive, Dropbox, OneDrive | 8081 |
-| [Syncthing](syncthing/) | Sincronización continua P2P de carpetas | Dropbox, Sync.com | 8384 |
-| [Vaultwarden](vaultwarden/) | Servidor no oficial de Bitwarden para contraseñas | Bitwarden nube, 1Password | 8443 (TLS) |
+| [Syncthing](syncthing/) | Sincronización continua P2P de carpetas y archivos | Dropbox, Sync.com | 8384 |
+| [Vaultwarden](vaultwarden/) | Servidor no oficial de Bitwarden para contraseñas | Bitwarden nube, Google Passwords | 8443 (TLS) |
 | [Joplin Server](joplin/) | Sincronización de notas cifradas E2EE | Evernote, Notion (sincronización) | 22300 |
 | [Actual Budget](actual-budget/) | Presupuestos con sincronización bancaria automática | YNAB, Mint, MoneyControl | 5006 (localhost) |
 | [Pi-hole](pi-hole/) | DNS con bloqueo de anuncios y rastreadores | NextDNS de pago, OpenDNS | 53 / panel 8080 |
