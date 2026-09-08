@@ -10,8 +10,8 @@ Cada servicio tiene su propia carpeta con un `README.md` (qué es, para qué lo 
 
 | Componente | Detalle |
 |---|---|
-| Equipo | Portátil HP 15ns-eq1071 reutilizado como servidor |
-| CPU | AMD Ryzen 7 4700U (8 núcleos / 8 hilos) |
+| Equipo | Portátil HP 15ns-eq1071 |
+| CPU | AMD Ryzen 7 4700U |
 | RAM | 32 GB DDR4 |
 | Almacenamiento | SSD NVMe 512 GB (74 GB para el sistema + 567 GB montados en `/data` para datos y medios) |
 | Sistema operativo | Ubuntu 26.04 LTS |
@@ -28,19 +28,19 @@ El portátil está encendido 24/7. El arranque de los contenedores es automátic
 | [Jellyfin](jellyfin/) | Streaming de películas, series y música | Netflix, Plex Pass, Spotify | 8096 |
 | [Nextcloud](nextcloud/) | Nube de archivos, calendario y sincronización | Google Drive, Dropbox, OneDrive | 8081 |
 | [Syncthing](syncthing/) | Sincronización continua P2P de carpetas y archivos | Dropbox, Sync.com | 8384 |
-| [Vaultwarden](vaultwarden/) | Servidor no oficial de Bitwarden para contraseñas | Bitwarden nube, Google Passwords | 8443 (TLS) |
+| [Vaultwarden](vaultwarden/) | Servidor no oficial de Bitwarden para contraseñas | Google Passwords | 8443 (TLS) |
 | [Joplin Server](joplin/) | Sincronización de notas cifradas E2EE | Evernote, Notion (sincronización) | 22300 |
 | [Actual Budget](actual-budget/) | Presupuestos con sincronización bancaria automática | YNAB, Mint, MoneyControl | 5006 (localhost) |
 | [Pi-hole](pi-hole/) | DNS con bloqueo de anuncios y rastreadores | NextDNS de pago, OpenDNS | 53 / panel 8080 |
 | [Portainer](portainer/) | Gestión web de los contenedores Docker | Docker Desktop | 9000 |
-| [Blog Astro](blog-astro/) | Blog estático propio servido con nginx | Hosting WordPress de pago | 4321 |
+| [Blog Astro](blog-astro/) | Blog estático propio creado con el Framework Astro, servido con nginx | Wordpress | 4321 |
 
 Toda la accesibilidad remota y entre dispositivos se resuelve con [Tailscale](tailscale/) (servicio gratuito hasta 3 usuarios / 100 dispositivos), que sustituye al port-forwarding del router y a un VPN tradicional.
 
 ## Acceso y Tailscale
 
 El servidor, mi PC de sobremesa y mi móvil están unidos a la misma *tailnet* (red privada de Tailscale). Todos los servicios se publican solo en esa red: se accede a ellos por la IP `100.x.x.x` que Tailscale asigna al servidor, sin abrir puertos en el router.
-
+Administro el servidor desde mi PC y mí móvil usando una conexión SSH.
 ```
  [Móvil Android] ─┐
  [PC sobremesa ] ─┼── Tailnet (WireGuard) ──> Servidor Ubuntu ──> contenedores :puertos
