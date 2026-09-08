@@ -13,7 +13,7 @@ Immich es el reemplazo autoalojado de referencia para Google Fotos: apps móvile
 
 ## Para qué lo uso
 
-Copia automática de las fotos del móvil al servidor (150 GB+ de recuerdos que no quiero en manos de Google) con búsqueda por personas, sitios y contenido, y álbunes compartidos con la familia. Uso la versión `v2` con el servicio de machine learning en CPU.
+Copia automática de las fotos del móvil al servidor (150 GB+ de fotos que no quiero en manos de Google) con búsqueda por personas, sitios y contenido, y álbunes compartidos con la familia. Uso la versión `v2` con el servicio de machine learning en CPU.
 
 ## Instalación
 
