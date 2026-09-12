@@ -1,3 +1,6 @@
+# ALTERNATIVA (opcional): servir el blog en un contenedor nginx:alpine en el
+# puerto 4321. La configuración activa usa el nginx del host en :80 detrás del
+# Cloudflare Tunnel — ver README.md, nginx-site.conf y cloudflared-config.yml.
 # Servidor del blog estático generado con Astro (carpeta dist/)
 services:
   blog:

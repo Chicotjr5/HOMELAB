@@ -33,13 +33,13 @@ El portátil está encendido 24/7 en casa. El arranque de los contenedores es au
 | [Actual Budget](actual-budget/) | Presupuestos con sincronización bancaria automática | YNAB, Mint, MoneyControl | 5006 (localhost) |
 | [Pi-hole](pi-hole/) | DNS con bloqueo de anuncios y rastreadores | NextDNS de pago, OpenDNS | 53 / panel 8080 |
 | [Portainer](portainer/) | Gestión web de los contenedores Docker | Docker Desktop | 9000 |
-| [Blog Astro](blog-astro/) | Blog estático propio servido con nginx | Hosting WordPress de pago | 4321 |
+| [Blog Astro](blog-astro/) | Blog estático propio servido con nginx + Cloudflare Tunnel | Hosting WordPress de pago, WordPress.com, Medium | 80 (nginx host) → `https://<DOMAIN>` |
 
-Toda la accesibilidad remota y entre dispositivos se resuelve con [Tailscale](tailscale/) (servicio gratuito hasta 3 usuarios / 100 dispositivos), que sustituye al port-forwarding del router y a un VPN tradicional.
+La accesibilidad remota privada y entre dispositivos se resuelve con [Tailscale](tailscale/) (servicio gratuito hasta 3 usuarios / 100 dispositivos), que sustituye al port-forwarding del router y a un VPN tradicional. Lo único publicado en Internet abierto es el blog, a través de un [Cloudflare Tunnel](blog-astro/) (ver más abajo).
 
 ## Acceso y Tailscale
 
-El servidor, mi PC de sobremesa y mi móvil están unidos a la misma *tailnet* (red privada de Tailscale). Todos los servicios se publican solo en esa red: se accede a ellos por la IP `100.x.x.x` que Tailscale asigna al servidor, sin abrir puertos en el router.
+El servidor, mi PC de sobremesa y mi móvil están unidos a la misma *tailnet* (red privada de Tailscale). Todos los servicios se publican solo en esa red: se accede a ellos por la IP `100.x.x.x` que Tailscale asigna al servidor, sin abrir puertos en el router. La única excepción es el blog Astro, visible públicamente en `https://<DOMAIN>` vía Cloudflare Tunnel.
 
 ```
  [Móvil Android] ─┐
@@ -48,6 +48,23 @@ El servidor, mi PC de sobremesa y mi móvil están unidos a la misma *tailnet* (
 ```
 
 Además uso `tailscale serve`/`funnel` y certificados TLS de Tailscale (`*.<tailnet>.ts.net`) para exponer con HTTPS algún servicio concreto (p. ej. Vaultwarden). Detalles en [tailscale/README.md](tailscale/).
+
+## Publicación en Internet: Cloudflare Tunnel
+
+Compré el dominio `<DOMAIN>` en Cloudflare (registrador + DNS al coste) y creé el tunnel `<TUNNEL_NAME>` desde el propio servidor:
+
+- `cloudflared` corre como servicio systemd (`/etc/cloudflared/config.yml`) y hace una **conexión saliente** al edge de Cloudflare: no hay puertos abiertos ni reenviados en el router.
+- El ingress enruta `<DOMAIN>` y `www.<DOMAIN>` a `http://localhost:80`, donde el nginx del host sirve el `dist/` del blog Astro (y hace proxy de `/retro-games/` a un servicio local).
+- El registro DNS del dominio queda *proxied* (nube naranja): Cloudflare termina el **TLS en su edge**, resuelve la caché y oculta la IP real del servidor.
+
+```
+ [Visitantes] ──> https://<DOMAIN> ──> Cloudflare edge (TLS/DNS)
+                                            │  tunnel saliente <TUNNEL_NAME>
+                                            ▼
+                       [Servidor] nginx :80 ──> blog estático Astro (dist/)
+```
+
+La configuración completa (vhost nginx + `config.yml` del tunnel) está documentada en [blog-astro/](blog-astro/).
 
 ## Estructura del repositorio
 
@@ -60,6 +77,8 @@ homelab/
 ├── actual-budget/     ├── portainer/       ├── blog-astro/
 ├── syncthing/         └── tailscale/
 ```
+
+La carpeta `blog-astro/` incluye además copias ofuscadas del vhost de nginx (`nginx-site.conf`) y de la configuración del tunnel (`cloudflared-config.yml`).
 
 ## Cómo desplegar un servicio
 
@@ -75,4 +94,4 @@ homelab/
 
 ## Aviso sobre datos ofuscados
 
-Las contraseñas, IPs, nombres de tailnet e identificadores reales han sido sustituidos por marcadores (`${VARIABLES}`, `<LAN_IP>`, `<TAILSCALE_IP>`, `<EQUIPO>.<TAILNET>.ts.net`, ...). Nunca subas un `.env` real a este repositorio: está excluido en `.gitignore`.
+Las contraseñas, IPs, nombres de tailnet, dominio, nombre/UUID del tunnel e identificadores reales han sido sustituidos por marcadores (`${VARIABLES}`, `<LAN_IP>`, `<TAILSCALE_IP>`, `<EQUIPO>.<TAILNET>.ts.net`, `<DOMAIN>`, `<TUNNEL_NAME>`, `<UUID>`, ...). Nunca subas un `.env` real a este repositorio: está excluido en `.gitignore`.

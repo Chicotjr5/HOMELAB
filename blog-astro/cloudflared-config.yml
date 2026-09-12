@@ -1,0 +1,13 @@
+# /etc/cloudflared/config.yml — servicio systemd "cloudflared"
+# El ingress solo usa puertos locales: nada queda expuesto en el router.
+# Sustituir <TUNNEL_NAME> por el nombre del tunnel y <UUID> por el generado
+# al hacer `cloudflared tunnel create` (o usar `tunnel: <UUID>` en versiones nuevas).
+tunnel: <TUNNEL_NAME>
+credentials-file: /etc/cloudflared/<UUID>.json
+
+ingress:
+  - hostname: <DOMAIN>
+    service: http://localhost:80
+  - hostname: www.<DOMAIN>
+    service: http://localhost:80
+  - service: http_status:404
